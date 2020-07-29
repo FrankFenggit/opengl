@@ -36,6 +36,7 @@ include_directories(
 
 # 源文件
 set(OPENGL_MODULES
+    blender
 	lightlab
 	movelight
     movelight_modfify
