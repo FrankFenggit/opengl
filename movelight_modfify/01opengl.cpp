@@ -216,50 +216,50 @@ main_menu_select(int value)
   glutPostRedisplay();
 }
 
-GLfloat GetRand()
+inline static GLfloat GetRand()
 {
 	int a;
-	srand((unsigned)time(NULL));
 	a = rand() % 256;
 	return (GLfloat)a / 255.0;
+}
+
+inline static GLfloat GetRandPosi()
+{
+	return GetRand() * 40 - 20;
+}
+
+inline static GLfloat GetRandColor()
+{
+	return GetRand();
 }
 
 int mainWindow;
 
 void DoChange(int value)
 {
-	static GLfloat sub = 0.1;
-	static int i = 0;
-	int j;
+	GLfloat lightPosi[8][4];
+	GLfloat light[8][4];
+	int lightNum[8] = {GL_LIGHT0, GL_LIGHT1, GL_LIGHT2, GL_LIGHT3, GL_LIGHT4, GL_LIGHT5, GL_LIGHT6, GL_LIGHT7};
+	int i, j;
 
 	glutSetWindow(mainWindow);
-	if (i == 10) {
-		sub *= -1;
-	} else if (i == 20) {
-		sub *= -1;
-		i = 0;
-	}
-	for (j = 0; j < 4; j++) {
-		left_light_position[j] += sub;
-		right_light_position[j] += sub;
-		red_light[j] = GetRand();
-		green_light[j] = GetRand();
-	}
-	glLightfv(GL_LIGHT0, GL_POSITION, left_light_position);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, red_light);
-	glLightfv(GL_LIGHT1, GL_POSITION, right_light_position);
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, green_light);
+	for (i = 0; i < 8; i++) {
+		for (j = 0; j < 3; j++) {
+			lightPosi[i][j] = GetRandPosi();
+			light[i][j] = GetRandColor();
+		}
+		lightPosi[i][3] = 1;
+		light[i][3] = 1;
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	gluLookAt(GetRand() * 10, GetRand() * 10, GetRand() * 10,  /* eye is at (0,0,5) */
-		0.0, 0.0, 0.0,      /* center is at (0,0,0) */
-		0.0, 1.0, 0.);      /* up is in positive Y direction */
-	glutDisplayFunc(display);
+		glEnable(lightNum[i]);
+		glLightfv(lightNum[i], GL_POSITION, lightPosi[i]);
+		glLightfv(lightNum[i], GL_DIFFUSE, light[i]);
+	}
+
+    glutDisplayFunc(display);
 	glutPostRedisplay();
-	i++;
 
-	glutTimerFunc(50, DoChange, 1);
+	glutTimerFunc(10, DoChange, 1);
 }
 
 int 
@@ -268,6 +268,7 @@ main(int argc, char **argv)
   int left_light_m, right_light_m, torus_m, teapot_m, ico_m;
   pthread_t th;
 
+  srand((unsigned)time(NULL));
   glutInitWindowSize(800, 800);
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
@@ -329,7 +330,7 @@ main(int argc, char **argv)
     0.0, 1.0, 0.);      /* up is in positive Y direction */
   glTranslatef(0.0, 0.0, -1.0);
 
-  glutTimerFunc(50, DoChange, 1);
+  glutTimerFunc(10, DoChange, 1);
   glutMainLoop();
   return 0;             /* ANSI C requires main to return int. */
 }
