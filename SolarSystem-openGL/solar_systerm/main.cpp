@@ -383,11 +383,10 @@ void myDisplay(void)
 void myTimerFunc(int val)
 {
 	// 参数调整
-	frontViewOnOff ^= 1;  // 正视图和顶视图切换
-	lighting = !lighting; // 灯光
+	// frontViewOnOff ^= 1;  // 正视图和顶视图切换
+	lighting = true; // 灯光
 	int nRand = rand()%4;
-	static int 
-	s_nRand  = 0;
+	static int 	s_nRand  = 0;
 	if (s_nRand == nRand) {
 		s_nRand = (nRand==3?0:nRand+1);
 	}

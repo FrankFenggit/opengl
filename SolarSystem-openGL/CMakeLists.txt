@@ -13,8 +13,8 @@ add_compile_options(-fPIE -pie -fstack-protector-strong -Wl,-z,relro,-z,now,-z,n
 find_package(Threads)
 find_package(PkgConfig)
 
-pkg_check_modules(GLM glm)
-pkg_check_modules(GLFW glfw3)
+#pkg_check_modules(GLM glm)
+#pkg_check_modules(GLFW glfw3)
 
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
