@@ -5,7 +5,7 @@
 #include "glDrawer.h"
 #include "glcamera.h"
 #include "planet.h"
-#include "glSkybox.h"
+#include "glskybox.h"
 #include "filesystem.h"
 #include "glexplosion.h"
 #include "trail.h"

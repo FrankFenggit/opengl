@@ -2,7 +2,7 @@
 #define TRAIL_H
 #include "base.h"
 #include <vector>
-#include "glTexture.h"
+#include "gltexture.h"
 class glTrail
 {
 public:
