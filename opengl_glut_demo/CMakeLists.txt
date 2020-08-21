@@ -30,12 +30,8 @@ include_directories(
 )
 # 源文件
 set(OPENGL_MODULES
+    dinoshade
     3FX
-    blender
-	lightlab
-	movelight
-    movelight_modfify
-	Mandelbrot
 )
 foreach (_module ${OPENGL_MODULES})
     aux_source_directory(${_module} MODULE_${_module}_SOURCES)
